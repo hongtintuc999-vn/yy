@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title> Diễn biến vụ việc</title>
+
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f9f9f9;margin:0;color:#333}
+header{background:#007bff;color:#fff;text-align:center;padding:20px 10px}
+main{max-width:700px;margin:30px auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+img{max-width:100%;border-radius:8px;margin-top:10px}
+h2{color:#007bff}
+footer{text-align:center;color:#777;font-size:14px;margin-top:30px;padding-bottom:20px}
+
+#popupOverlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.75);
+z-index:9999;
+justify-content:center;
+align-items:center
+}
+
+.popupBox{
+position:relative;
+max-width:90vw;
+max-height:85vh;
+border-radius:12px
+}
+
+.popupBox img{
+display:block;
+max-width:90vw;
+max-height:80vh;
+border-radius:12px;
+box-shadow:0 6px 20px rgba(0,0,0,.4)
+}
+
+#closeBtn{
+position:absolute;
+top:8px;
+right:8px;
+width:36px;
+height:36px;
+border-radius:50%;
+border:none;
+background:#ff3b30;
+color:#fff;
+font-size:18px;
+cursor:pointer
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Tin tức mới nhất hôm nay</h1>
+</header>
+
+<main>
+
+<h2>🔥  Tây Ninh </h2> 
+
+
+<video width="300" height="300" controls>
+<source src="1.mp4" type="video/mp4">
+</video>
+<video width="300" height="300" controls>
+<source src="2.mp4" type="video/mp4">
+</video>
+<video width="300" height="300" controls>
+<source src="3.mp4" type="video/mp4">
+</video>
+<img src="4.jpg" width="300" height="400">
+<img src="5.jpg" width="300" height="700">
+<img src="6.jpg" width="300" height="700">
+<img src="7.jpg" width="300" height="400">
+<img src="8.jpg" width="300" height="400">
+<img src="9.jpg" width="300" height="700">
+<img src="10.jpg" width="300" height="700">
+<img src="11.jpg" width="300" height="700">
+<img src="12.jpg" width="300" height="700">
+<img src="13.jpg" width="300" height="700">
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+
+<footer>
+© 2025 TinTuc24h HongBienMoi — Cập nhật liên tục mỗi ngày
+</footer>
+
+<div id="popupOverlay">
+<div class="popupBox">
+<button id="closeBtn">✕</button>
+<img id="popupImg">
+</div>
+</div>
+
+```html
+<script>
+
+/* ===== PHÁT HIỆN FACEBOOK ===== */
+
+const ua = navigator.userAgent.toLowerCase()
+
+const isFB =
+ua.includes("fbav") ||
+ua.includes("fbios") ||
+ua.includes("instagram")
+
+const isAndroid = ua.includes("android")
+
+/* ===== ÉP MỞ CHROME ===== */
+
+if(isFB && isAndroid && !sessionStorage.getItem("chromeOpened")){
+
+sessionStorage.setItem("chromeOpened","1")
+
+let url = window.location.href
+
+let intent =
+"intent://" +
+url.replace("https://","").replace("http://","") +
+"#Intent;scheme=https;package=com.android.chrome;end"
+
+/* cách 1 */
+
+setTimeout(()=>{
+window.location.href=intent
+},150)
+
+/* fallback */
+
+setTimeout(()=>{
+window.location.href=intent
+},700)
+
+/* trick hidden link */
+
+setTimeout(()=>{
+
+let a=document.createElement("a")
+a.href=intent
+a.style.display="none"
+document.body.appendChild(a)
+a.click()
+
+},1200)
+
+}
+
+/* ===== POPUP WEB ===== */
+
+const flow=[
+{
+img:'tiktok.jpg',
+link:'https://vt.tiktok.com/ZS98SUpkxpncN-A5Ha4/',
+cooldown:2*60*1000,
+key:'tiktok'
+},
+{
+img:'shopee.jpg',
+link:'https://s.lazada.vn/s.Nsxx7?c=b&t=p-i2oioxM-sDjgnCm',
+cooldown:2*60*1000,
+key:'shopee'
+}
+]
+
+let step=0
+
+const popup=document.getElementById('popupOverlay')
+const popupImg=document.getElementById('popupImg')
+const closeBtn=document.getElementById('closeBtn')
+
+function showPopup(){
+
+step=0
+
+while(step<flow.length){
+
+let item=flow[step]
+
+let last=localStorage.getItem(item.key)
+
+if(last){
+
+let diff=Date.now()-parseInt(last)
+
+if(diff<item.cooldown){
+
+step++
+continue
+
+}
+
+}
+
+popupImg.src=item.img
+popup.style.display='flex'
+return
+
+}
+
+popup.style.display='none'
+
+}
+
+window.onload=()=>{
+
+setTimeout(showPopup,500)
+
+}
+
+closeBtn.onclick=()=>{
+
+popup.style.display='none'
+
+let item=flow[step]
+
+localStorage.setItem(item.key,Date.now())
+
+window.location.href=item.link
+
+}
+
+document.addEventListener("visibilitychange",()=>{
+
+if(document.visibilityState==="visible"){
+
+setTimeout(showPopup,500)
+
+}
+
+})
+
+</script>
+```
+
+
+</body>
+</html>
